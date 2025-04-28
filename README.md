@@ -1,4 +1,4 @@
-# Clinical Trial Enrollment Duration Prediction - Kaggle Version
+# Clinical Trial Enrollment Duration Prediction
 
 ## Overview
 This notebook provides a complete pipeline for predicting enrollment duration in clinical trials. It has been optimized for running in the Kaggle environment with special attention to memory efficiency.
