@@ -1,39 +1,66 @@
-# NEST-2024
+# Clinical Trial Enrollment Duration Prediction - Kaggle Version
+
+## Overview
+This notebook provides a complete pipeline for predicting enrollment duration in clinical trials. It has been optimized for running in the Kaggle environment with special attention to memory efficiency.
 
 ## Problem Statement
+The goal is to predict how long patient enrollment will take for clinical trials based on trial characteristics. This information helps trial designers make better decisions about eligibility criteria, recruitment strategies, and overall trial design.
 
-Predicting Actual Enrollment Duration of clinical studies with explainability.
+## Features
+- **Memory-efficient processing**: Handles large clinical trial datasets without running out of memory
+- **Comprehensive EDA**: Generates visualizations to understand relationships in the data
+- **Multiple models**: Trains and compares RandomForest, GradientBoosting, XGBoost, and LightGBM
+- **Model explainability**: Uses SHAP values to explain model predictions
+- **Interactive visualizations**: All visualizations display directly in the notebook
 
-## Business context
+## How to Use
 
-While designing and writing a clinical trial protocol document, multiple empirical, scientific and medical references are used. Like any other hypothesis testing, it is helpful in gaining insights from similar historical research / experiments / clinical studies from the past to minimize chances of failure and improve predictability, quality & execution. Authors of protocol documents would benefit from accurately identifying the right criteria for patients and accelerating patient recruitment for the clinical trial. Time taken for actual enrollment prediction during protocol development will provide valuable insights into whether the criteria should be more restrictive or broad, given past clinical trials data (e.g., avoid overly restrictive criteria that hinder recruitment, but also avoid criteria so broad that they fail to adequately test drug efficacy). These insights can help avoid errors and improve the speed and efficiency of the clinical trial design, which remains a challenge for pharma sector. Delays in designing, errors etc. have a cascading impact on timelines for clinical trials. 
+### Step 1: Upload Data
+Upload your clinical trials dataset to Kaggle. The expected format is a CSV file with various clinical trial characteristics, including at least one column related to enrollment (containing "enroll" in the column name).
 
-## Problem statement from technical lens
+### Step 2: Update File Path
+In the main code section at the bottom of the notebook, update the file path to point to your dataset:
 
-Predicting the actual enrolment duration (in months) of Completed "interventional" studies based on features (structured and unstructured) such as enrollment, study design, criteria, facility, country etc. Additionally, providing explainability that answers the reason for the prediction.
+```python
+# Replace with your dataset path
+file_path = '../input/your-dataset-folder/your-file.csv'
+```
 
-## Dataset
+### Step 3: Run the Notebook
+Execute all cells to run the complete pipeline. The process includes:
+1. Data loading and initial exploration
+2. Data preprocessing with memory-efficient options
+3. Feature engineering
+4. Model training and evaluation
+5. Model explanation with SHAP
 
-A smaller subset of 450,000 clinical trials data will be provided from clinicaltrials.gov (publicly available).
+### Memory Efficiency Options
+The parameter `memory_efficient=True` enables several optimizations:
+- Dropping columns with >90% missing values
+- Limiting categorical features to those with <50 unique values
+- Using only the top 10 categories for high-cardinality features
+- Limiting one-hot encoding with `max_categories=10`
 
-## Technical solution requirement
+If your dataset is small or you have access to a high-memory Kaggle instance, you can set `memory_efficient=False` for more comprehensive modeling.
 
-Utilizing AI & deep learning methods, obtain a solution such that the prediction of enrollment time taken based on Disease/Condition is backed by explainability (positively or negatively) affecting the magnitude. Causal inference approach will be given more points.
+## Expected Outputs
+The notebook generates:
+- EDA visualizations showing feature distributions and relationships
+- Model performance metrics (RMSE, R², SMAPE)
+- Model comparison plots
+- SHAP feature importance visualizations
+- Dependence plots for the most influential features
 
-## Input (for example)
+## Requirements
+All required libraries are included in the standard Kaggle environment:
+- pandas, numpy
+- scikit-learn
+- matplotlib, seaborn
+- xgboost, lightgbm
+- shap
 
-Condition, Phases, Facility location, Enrollment, Criteria, Study design, Study title, Intervention, etc. (various other features can be included)
-
-## Output (for example)
-
-30 months (predicted) with explainability – which features that positively and negatively influence the prediction.(Explainability: show the weightage of each feature on impact to make prediction)
-
-## Metrics for Evaluation
-
-Response variable: Time taken for Enrollment
-RMSE (root mean squared error), R squared and adjusted R squared.
-Symmetric Mean Absolute Percent Error (SMAPE)
-
-## Additional evaluation
-
-Exploratory data analysis, Data preparation/cleaning, feature engineering, modeling, evaluation using mentioned metrics and the model explainability (It is crucial that the model's explainability aligns with domain understanding of clinical trials); weighted more on model explainability. Important to identify the features used by the team.
+## Tips for Better Results
+- Try setting `memory_efficient=False` if your dataset is small
+- Adjust the `missing_threshold` parameter in the preprocessing function if needed
+- Experiment with different models and parameters
+- Check the dependence plots to understand how specific features affect predictions 
